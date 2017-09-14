@@ -1,0 +1,29 @@
+.task_list__item {
+  margin-left: 0;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  display: block;
+  background-color: #38786a;
+  border-radius: 3px;
+  min-height: 30px;
+  color: white;
+  line-height: 40px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.material-icons {
+  display: none;
+  font-size: 24px;
+  float: right;
+  margin-top: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.material-icons:hover {
+    background-color: #004c3f;
+}
+
+.task_list__item:hover .material-icons {
+  display: inline-block;
+}
