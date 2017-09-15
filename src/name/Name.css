@@ -10,3 +10,9 @@
   vertical-align: middle;
   cursor: pointer;
 }
+
+.list_name:hover .material-icons {
+  display: inline-block;
+  margin-top: 12px;
+  margin-right: 12px;
+}

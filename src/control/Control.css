@@ -1,0 +1,11 @@
+.material-icons {
+  display: none;
+  font-size: 24px;
+  float: right;
+  margin-top: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.material-icons:hover {
+    background-color: #004c3f;
+}
