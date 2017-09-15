@@ -1,16 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Name.css';
-import Control from '../control/Control';
 
-class Name extends React.Component {
-  render() {
-    return (
-      <div className="list_name">
-        {this.props.value}
-        <Control type="delete" />
-      </div>
-    )
-  }
+function Name(props) {
+  return (
+    <div className="list_name">
+      {props.title}
+      <i className="material-icons control">delete</i>
+    </div>
+  );
 }
+
+Name.propTypes = {
+  title: PropTypes.string,
+};
+
+Name.defaultProps = {
+  title: 'List of things to do',
+};
 
 export default Name;

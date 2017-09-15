@@ -1,17 +1,27 @@
 .task_list__item {
   margin-left: 0;
   margin-bottom: 10px;
-  padding-left: 10px;
+  padding: 10px 5px 10px 10px;
   display: block;
   background-color: #38786a;
   border-radius: 3px;
-  min-height: 30px;
+  min-height: 40px;
   color: white;
-  line-height: 40px;
-  vertical-align: middle;
+  font-size: 16px;
   cursor: pointer;
 }
 
-.task_list__item:hover .material-icons {
+.task_list__item:hover .control {
   display: inline-block;
+  width: 24px;
+}
+
+.task_list__item.checked span{
+  text-decoration: line-through;
+  color: rgba(black, 0.5);
+}
+
+.title {
+  display: inline-block;
+  width: 230px;
 }
