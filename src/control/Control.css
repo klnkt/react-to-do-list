@@ -1,0 +1,11 @@
+.control {
+  display: none;
+  font-size: 24px;
+  float: right;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.control:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}

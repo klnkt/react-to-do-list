@@ -1,8 +1,25 @@
 .card {
+  position: relative;
   width: 350px;
-  min-height: 450px;
+  min-height: 400px;
   margin-right: 20px;
   background-color: #E1E2E1;
-  border-radius: 5px;
-  overflow: hidden;
+}
+
+.button {
+  position: absolute;
+  left: 151px;
+  bottom: -24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50px;
+  background-color: #00695c;
+  cursor: pointer;
+}
+
+.control__add {
+  display: inline;
+  font-size: 48px;
+  font-weight: 100;
+  color: white;
 }

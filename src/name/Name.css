@@ -11,8 +11,14 @@
   cursor: pointer;
 }
 
-.list_name:hover .control {
-  display: inline-block;
+.control__more {
+  display: none;
   margin-top: 12px;
   margin-right: 12px;
+  font-size: 24px;
+}
+
+.list_name:hover .control__more {
+  display: inline-block;
+  float: right;
 }

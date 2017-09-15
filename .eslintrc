@@ -5,4 +5,9 @@
         "node": true,
         "jasmine": true
     },
-  }
+    "rules": {
+        "no-param-reassign": ["error", {
+            "props": false
+        }]
+    }
+}

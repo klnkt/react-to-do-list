@@ -4,7 +4,6 @@
   padding: 10px 5px 10px 10px;
   display: block;
   background-color: #38786a;
-  border-radius: 3px;
   min-height: 40px;
   color: white;
   font-size: 16px;
@@ -16,9 +15,13 @@
   width: 24px;
 }
 
+.task_list__item.checked {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .task_list__item.checked span{
   text-decoration: line-through;
-  color: rgba(black, 0.5);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .title {

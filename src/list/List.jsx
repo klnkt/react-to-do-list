@@ -1,67 +1,40 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './List.css';
 import Task from '../task/Task';
 
-const TASKS = [
-  { id: 1, title: 'Wash some dishes', status: 'unchecked' },
-  { id: 2, title: 'Pet my cat', status: 'unchecked' },
-  { id: 3, title: 'Read about ES6 shortcuts and spreads', status: 'unchecked' },
-  { id: 4, title: 'Fix all typos and sintax errors so linter finally leaves me alone', status: 'unchecked' },
-];
+function List(props) {
+  const changeStatus = props.changeStatus;
+  const removeTask = props.removeTask;
+  const items = props.tasks.map((it, index) => (
+    <Task
+      tasks={props.tasks}
+      title={props.tasks[index].title}
+      id={props.tasks[index].id}
+      status={props.tasks[index].status}
+      removeTask={removeTask}
+      changeStatus={changeStatus}
+    />
+  ),
+  );
 
-class List extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      tasks: TASKS,
-    };
-    this.changeStatus = this.changeStatus.bind(this);
-    this.addTask = this.addTask.bind(this);
-    this.removeTask = this.removeTask.bind(this);
-  }
-
-  changeStatus(taskId, taskStatus) {
-    const modifiedTasks = this.state.tasks.map((it) => {
-      if (it.id === taskId) {
-        const obj = { status: taskStatus };
-        return { ...it, ...obj };
-      }
-      return it;
-    });
-    this.setState({ tasks: modifiedTasks });
-  }
-
-  addTask(task) {
-    const modifiedTasks = this.state.tasks.slice().push(task);
-    this.setState({ tasks: modifiedTasks });
-  }
-
-  removeTask(taskId) {
-    const modifiedTasks = this.state.tasks.filter(it => !(it.id === taskId));
-    this.setState({ tasks: modifiedTasks });
-  }
-
-  render() {
-    const items = [];
-    this.state.tasks.forEach((it, index) => (
-      items.push(
-        <Task
-          title={this.state.tasks[index].title}
-          id={this.state.tasks[index].id}
-          status={this.state.tasks[index].status}
-          changeStatus={this.changeStatus}
-          removeTask={this.removeTask}
-        />,
-      )
-    ));
-    return (
-      <div className="list_wraper">
-        <ul className="task_list">
-          {items}
-        </ul>
-      </div>
-    );
-  }
+  return (
+    <div className="list_wraper">
+      <ul className="task_list">
+        {items}
+      </ul>
+    </div>
+  );
 }
+
+List.propTypes = {
+  changeStatus: PropTypes.func.isRequired,
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  removeTask: PropTypes.func.isRequired,
+};
+
+List.defaultProps = {
+  tasks: [],
+};
 
 export default List;

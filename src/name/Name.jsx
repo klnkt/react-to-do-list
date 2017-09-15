@@ -6,7 +6,7 @@ function Name(props) {
   return (
     <div className="list_name">
       {props.title}
-      <i className="material-icons control">delete</i>
+      <i className="material-icons control__more">more_vert</i>
     </div>
   );
 }
