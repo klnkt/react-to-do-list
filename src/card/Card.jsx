@@ -17,7 +17,7 @@ class Card extends React.Component {
     super();
     this.state = {
       tasks: TASKS,
-      showInput: true,
+      showInput: false,
     };
     this.changeStatus = this.changeStatus.bind(this);
     this.addTask = this.addTask.bind(this);
