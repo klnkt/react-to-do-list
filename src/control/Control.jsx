@@ -5,7 +5,7 @@ import './Control.css';
 function Control(props) {
   return (
     <i
-      className={`material-icons ${props.newClass}`}
+      className={`material-icons control ${props.newClass}`}
       onClick={() => props.cb(props.id, props.status)}
       role="button"
       tabIndex="0"

@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Name.css';
+import Control from '../control/Control';
 
 function Name(props) {
   return (
     <div className="list_name">
       {props.title}
-      <i className="material-icons control__more">more_vert</i>
+      <Control name="more_vert" newClass="control__more control__hidden" />
     </div>
   );
 }

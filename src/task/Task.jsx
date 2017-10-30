@@ -14,7 +14,7 @@ function Task(props) {
       cb={changeStatus}
       id={id}
       status="checked"
-      newClass="control"
+      newClass="control__hidden control__hover"
     />
   );
   const uncheckControl = (
@@ -23,10 +23,17 @@ function Task(props) {
       cb={changeStatus}
       id={id}
       status="unchecked"
-      newClass="control"
+      newClass="control__hidden control__hover"
     />
   );
-  const deleteControl = <Control name="delete" cb={removeTask} id={id} newClass="control" />;
+  const deleteControl = (
+    <Control
+      name="delete"
+      cb={removeTask}
+      id={id}
+      newClass="control__hidden control__hover"
+    />
+  );
   return (
     <li className={taskClass} key={props.id}>
       <span className="title">{props.title}</span>

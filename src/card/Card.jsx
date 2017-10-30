@@ -3,6 +3,7 @@ import './Card.css';
 import List from '../list/List';
 import Name from '../name/Name';
 import Control from '../control/Control';
+import Input from '../input/Input';
 
 const TASKS = [
   { id: 1, title: 'Wash some dishes', status: 'unchecked' },
@@ -16,11 +17,14 @@ class Card extends React.Component {
     super();
     this.state = {
       tasks: TASKS,
-      hidden: true,
+      showInput: true,
     };
     this.changeStatus = this.changeStatus.bind(this);
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.renderInput = this.renderInput.bind(this);
+    this.showInput = this.showInput.bind(this);
+    this.hideInput = this.hideInput.bind(this);
   }
 
   changeStatus(taskId, taskStatus) {
@@ -34,19 +38,49 @@ class Card extends React.Component {
     this.setState({ tasks: modifiedTasks });
   }
 
-  // showInput() {
-  //
-  // }
+  showInput() {
+    const modifiedTasks = {
+      tasks: this.state.tasks,
+      showInput: true,
+    };
+    this.setState(modifiedTasks);
+  }
 
-  addTask(task) {
+  hideInput() {
+    const modifiedTasks = {
+      tasks: this.state.tasks,
+      showInput: false,
+    };
+    this.setState(modifiedTasks);
+  }
+
+  addTask(newTitle, newStatus) {
     const modifiedTasks = this.state.tasks.slice();
-    modifiedTasks.push(task);
-    this.setState({ tasks: modifiedTasks });
+    const idArr = modifiedTasks.map(it => it.id);
+    const newId = Math.max.apply(null, idArr) + 1;
+    const newTask = {
+      id: newId,
+      title: newTitle,
+      status: newStatus,
+    };
+    modifiedTasks.push(newTask);
+    this.setState({
+      tasks: modifiedTasks,
+      showInput: false,
+    });
   }
 
   removeTask(taskId) {
     const modifiedTasks = this.state.tasks.filter(it => !(it.id === taskId));
     this.setState({ tasks: modifiedTasks });
+  }
+
+  renderInput() {
+    let inputElement = '';
+    if (this.state.showInput === true) {
+      inputElement = <Input addTask={this.addTask} hideInput={this.hideInput} />;
+    }
+    return inputElement;
   }
 
   render() {
@@ -58,6 +92,7 @@ class Card extends React.Component {
           changeStatus={this.changeStatus}
           removeTask={this.removeTask}
         />
+        {this.renderInput()}
         <Control name="add" cb={this.showInput} newClass="button control__add" />
       </div>
     );
