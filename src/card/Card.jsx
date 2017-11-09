@@ -83,6 +83,14 @@ class Card extends React.Component {
     return inputElement;
   }
 
+  renderAddButton() {
+    let buttonElement = '';
+    if (this.state.showInput === false) {
+      buttonElement = <Control name="add" cb={this.showInput} newClass="button control__add" />;
+    }
+    return buttonElement;
+  }
+
   render() {
     return (
       <div className="card">
@@ -93,7 +101,7 @@ class Card extends React.Component {
           removeTask={this.removeTask}
         />
         {this.renderInput()}
-        <Control name="add" cb={this.showInput} newClass="button control__add" />
+        {this.renderAddButton()}
       </div>
     );
   }

@@ -20,7 +20,17 @@ class Input extends React.Component {
 
   render() {
     return (
-      <form className="task_add">
+      <form
+        className="task_add"
+        id="addTask"
+        onSubmit={
+          (evt) => {
+            if (evt.target.checkValidity()) {
+              this.props.addTask(this.state.value, 'unchecked');
+            }
+          }
+        }
+      >
         <textarea
           maxLength="150"
           placeholder="What to do?.."
@@ -28,14 +38,15 @@ class Input extends React.Component {
           className="task_input"
           value={this.state.value}
           onChange={this.handleChange}
+          required
         />
-        <Control
-          name="add"
-          cb={this.props.addTask}
-          id={this.state.value}
-          status="unchecked"
-          newClass="control__add-task control__hover"
-        />
+        <button type="submit" className="button__icon" form="addTask">
+          <Control
+            name="add"
+            cb={() => false}
+            newClass="control__add-task control__hover"
+          />
+        </button>
         <Control
           name="close"
           cb={this.props.hideInput}

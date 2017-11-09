@@ -38,6 +38,13 @@ function Task(props) {
     <li className={taskClass} key={props.id}>
       <span className="title">{props.title}</span>
       {deleteControl}
+      <Control
+        name="edit"
+        cb={changeStatus}
+        id={id}
+        status="unchecked"
+        newClass="control__hidden control__hover"
+      />
       {(props.status === 'unchecked') ? checkControl : uncheckControl}
     </li>
   );
