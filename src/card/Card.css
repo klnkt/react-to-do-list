@@ -11,7 +11,7 @@
 
 .button {
   position: absolute;
-  left: 151px;
+  left: 176px;
   bottom: -24px;
   width: 48px;
   height: 48px;
@@ -20,9 +20,19 @@
   cursor: pointer;
 }
 
-.control__add {
+.card__add {
   display: inline;
   font-size: 48px;
   font-weight: 100;
   color: white;
+}
+
+.card__input {
+  margin-left: 20px;
+  background-color: #F5F5F6;
+  width: 360px;
+  border: grey;
+  color: grey;
+  border-color: #38786a;
+  box-shadow: 0 0 15px #38786a;
 }

@@ -9,7 +9,7 @@ const TASKS = [
   { id: 1, title: 'Wash some dishes', status: 'unchecked' },
   { id: 2, title: 'Pet my cat', status: 'unchecked' },
   { id: 3, title: 'Read about ES6 shortcuts and spreads', status: 'unchecked' },
-  { id: 4, title: 'Fix all typos and sintax errors so linter finally leaves me alone', status: 'unchecked' },
+  { id: 4, title: 'Fix all typos', status: 'unchecked' },
 ];
 
 class Card extends React.Component {
@@ -22,9 +22,11 @@ class Card extends React.Component {
     this.changeStatus = this.changeStatus.bind(this);
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    this.editTask = this.editTask.bind(this);
     this.renderInput = this.renderInput.bind(this);
     this.showInput = this.showInput.bind(this);
     this.hideInput = this.hideInput.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   changeStatus(taskId, taskStatus) {
@@ -35,7 +37,10 @@ class Card extends React.Component {
       }
       return it;
     });
-    this.setState({ tasks: modifiedTasks });
+    this.setState({
+      tasks: modifiedTasks,
+      showInput: false,
+    });
   }
 
   showInput() {
@@ -44,6 +49,7 @@ class Card extends React.Component {
       showInput: true,
     };
     this.setState(modifiedTasks);
+    document.addEventListener('click', this.handleOutsideClick, false);
   }
 
   hideInput() {
@@ -52,18 +58,40 @@ class Card extends React.Component {
       showInput: false,
     };
     this.setState(modifiedTasks);
+    document.removeEventListener('click', this.handleOutsideClick, false);
   }
 
-  addTask(newTitle, newStatus) {
+  handleOutsideClick(e) {
+    if (this.inputNode.contains(e.target)) {
+      return;
+    }
+    this.hideInput();
+  }
+
+  addTask(newTitle) {
     const modifiedTasks = this.state.tasks.slice();
     const idArr = modifiedTasks.map(it => it.id);
     const newId = Math.max.apply(null, idArr) + 1;
     const newTask = {
       id: newId,
       title: newTitle,
-      status: newStatus,
+      status: 'unchecked',
     };
     modifiedTasks.push(newTask);
+    this.setState({
+      tasks: modifiedTasks,
+      showInput: false,
+    });
+  }
+
+  editTask(taskTitle, taskId) {
+    const modifiedTasks = this.state.tasks.map((it) => {
+      if (it.id === taskId) {
+        const obj = { title: taskTitle };
+        return { ...it, ...obj };
+      }
+      return it;
+    });
     this.setState({
       tasks: modifiedTasks,
       showInput: false,
@@ -78,7 +106,11 @@ class Card extends React.Component {
   renderInput() {
     let inputElement = '';
     if (this.state.showInput === true) {
-      inputElement = <Input addTask={this.addTask} hideInput={this.hideInput} />;
+      inputElement = (
+        <div ref={(inputNode) => { this.inputNode = inputNode; }}>
+          <Input do={this.addTask} undo={this.hideInput} newClass="card__input" />
+        </div>
+      );
     }
     return inputElement;
   }
@@ -86,7 +118,7 @@ class Card extends React.Component {
   renderAddButton() {
     let buttonElement = '';
     if (this.state.showInput === false) {
-      buttonElement = <Control name="add" cb={this.showInput} newClass="button control__add" />;
+      buttonElement = <Control name="add" cb={this.showInput} newClass="button card__add" />;
     }
     return buttonElement;
   }
@@ -99,6 +131,7 @@ class Card extends React.Component {
           tasks={this.state.tasks}
           changeStatus={this.changeStatus}
           removeTask={this.removeTask}
+          editTask={this.editTask}
         />
         {this.renderInput()}
         {this.renderAddButton()}

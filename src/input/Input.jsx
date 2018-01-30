@@ -6,61 +6,79 @@ import Control from '../control/Control';
 class Input extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { value: this.props.title };
     this.handleChange = this.handleChange.bind(this);
   }
 
   clearValue() {
-    this.setState({ value: '' });
+    this.setState({ value: '', show: false });
   }
 
   handleChange(evt) {
     this.setState({ value: evt.target.value });
   }
 
+  resizeTextarea() {
+    const title = this.state.value;
+    return Math.ceil(title.length / 30);
+  }
+
   render() {
     return (
-      <form
-        className="task_add"
-        id="addTask"
-        onSubmit={
-          (evt) => {
-            if (evt.target.checkValidity()) {
-              this.props.addTask(this.state.value, 'unchecked');
+      <div className={this.props.newClass}>
+        <form
+          className="task_add"
+          id={this.props.id}
+          onSubmit={
+            (evt) => {
+              evt.preventDefault();
+              if (evt.target.checkValidity()) {
+                this.props.do(this.state.value, this.props.id);
+              }
             }
           }
-        }
-      >
-        <textarea
-          maxLength="150"
-          placeholder="What to do?.."
-          rows="1"
-          className="task_input"
-          value={this.state.value}
-          onChange={this.handleChange}
-          required
-        />
-        <button type="submit" className="button__icon" form="addTask">
-          <Control
-            name="add"
-            cb={() => false}
-            newClass="control__add-task control__hover"
+        >
+          <textarea
+            maxLength="150"
+            placeholder="What to do?.."
+            rows={this.resizeTextarea()}
+            className="task_input__textarea"
+            value={this.state.value}
+            onChange={this.handleChange}
+            ref={(c) => { this.textarea = c; }}
+            required
           />
-        </button>
-        <Control
-          name="close"
-          cb={this.props.hideInput}
-          status="unchecked"
-          newClass="control__add-task control__hover"
-        />
-      </form>
+          <Control
+            name="close"
+            cb={this.props.undo}
+            status="unchecked"
+            newClass="control__input control__hover"
+          />
+          <button type="submit" className="button__icon" form={this.props.id}>
+            <Control
+              name="add"
+              cb={() => false}
+              newClass="control__input control__hover"
+            />
+          </button>
+        </form>
+      </div>
     );
   }
 }
 
 Input.propTypes = {
-  addTask: PropTypes.func.isRequired,
-  hideInput: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  id: PropTypes.number,
+  do: PropTypes.func.isRequired,
+  undo: PropTypes.func.isRequired,
+  newClass: PropTypes.string,
+};
+
+Input.defaultProps = {
+  title: '',
+  id: 0,
+  newClass: '',
 };
 
 export default Input;

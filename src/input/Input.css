@@ -1,27 +1,38 @@
-.task_add {
-  margin: 0 20px 0 20px;
-  display: flex;
-  flex-direction: row;
-}
-
 .task_input {
-  width: 240px;
   min-height: 40px;
   font-size: 16px;
-  color: rgba(0, 0, 0, 0.75);
 }
 
-.control__add-task {
-  margin: 0;
-  width: 36px;
-  height: 36px;
-  font-size: 36px;
+.task_input__textarea {
+  padding: 0;
+  margin: 10px 0px 6px 10px;
+  resize: none;
+  width: 260px;
+  font-family: sans-serif;
+  font-size: inherit;
+  background-color: inherit;
+  color: inherit;
+  border: 0;
+  overflow: hidden;
+}
+
+.task_input__textarea:focus {
+  outline:none;
+}
+
+.control__input {
+  font-size: 24px;
   font-weight: 100;
-  color: rgba(0,0,0,0.4);
   cursor: pointer;
+  color: inherit;
 }
 
 .button__icon {
+  display: inline-block;
+  float: right;
+  padding: 0;
+  display: inline-block;
   border: 0px;
   background-color: inherit;
+  color: inherit;
 }
