@@ -1,18 +1,14 @@
 .list_name {
   margin-bottom: 15px;
-  padding-left: 30px;
-  color: white;
-  min-height: 50px;
+  min-height: 60px;
   background-color: #004c3f;
-  font-weight: 300;
-  font-size: 25px;
-  line-height: 50px;
   vertical-align: middle;
   cursor: pointer;
+  color: white;
 }
 
 .control__more {
-  margin-top: 12px;
+  margin-top: 15px;
   margin-right: 12px;
   font-size: 24px;
 }
@@ -20,4 +16,32 @@
 .list_name:hover .control__more {
   display: inline-block;
   float: right;
+}
+
+.list_name__input {
+  width: 370px;
+  padding: 0;
+  margin-top: 6px;
+  margin-left: 20px;
+  display: inline-block;
+  float: left;
+  color: white;
+  background-color: #004c3f;
+  font-weight: 300;
+  font-size: 25px;
+}
+
+.list_name__title {
+  margin: 18px 0 0 30px;
+  display: inline-block;
+  float: left;
+  width: 320px;
+  font-weight: 300;
+  font-size: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+}
+
+.list_name__title:focus {
+  outline:none;
 }

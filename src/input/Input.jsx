@@ -10,6 +10,10 @@ class Input extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    this.textarea.focus();
+  }
+
   clearValue() {
     this.setState({ value: '', show: false });
   }
@@ -45,7 +49,7 @@ class Input extends React.Component {
             className="task_input__textarea"
             value={this.state.value}
             onChange={this.handleChange}
-            ref={(c) => { this.textarea = c; }}
+            ref={(e) => { this.textarea = e; }}
             required
           />
           <Control
