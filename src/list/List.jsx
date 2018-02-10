@@ -8,23 +8,19 @@ function List(props) {
   const removeTask = props.removeTask;
   const editTask = props.editTask;
   const editState = props.editState;
-  const cardId = props.cardId;
-  const items = props.tasks.map((it, index) => (
-    <div>
-      <Task
-        tasks={props.tasks}
-        title={props.tasks[index].title}
-        key={props.tasks[index].id}
-        id={props.tasks[index].id}
-        status={props.tasks[index].status}
-        removeTask={removeTask}
-        changeStatus={changeStatus}
-        editTask={editTask}
-        editState={editState}
-        cardId={cardId}
-        edit={props.tasks[index].edit}
-      />
-    </div>
+  const items = props.tasks.map(it => (
+    <Task
+      title={it.title}
+      key={it.id}
+      id={it.id}
+      status={it.status}
+      removeTask={removeTask}
+      changeStatus={changeStatus}
+      editTask={editTask}
+      editState={editState}
+      cardId={props.cardId}
+      edit={it.edit}
+    />
   ),
   );
 

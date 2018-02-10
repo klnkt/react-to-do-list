@@ -37,7 +37,7 @@ class Input extends React.Component {
             (evt) => {
               evt.preventDefault();
               if (evt.target.checkValidity()) {
-                this.props.do(this.state.value, this.props.id);
+                this.props.do(this.state.value, this.props.id, this.props.cardId);
               }
             }
           }
@@ -58,10 +58,10 @@ class Input extends React.Component {
             status="unchecked"
             newClass="control__input control__hover"
           />
-          <button type="submit" className="button__icon" form={this.props.id}>
+          <button type="submit" className="button__icon">
             <Control
               name="add"
-              cb={() => false}
+              cb={() => {}}
               newClass="control__input control__hover"
             />
           </button>
@@ -74,6 +74,7 @@ class Input extends React.Component {
 Input.propTypes = {
   title: PropTypes.string,
   id: PropTypes.number,
+  cardId: PropTypes.number,
   do: PropTypes.func.isRequired,
   undo: PropTypes.func.isRequired,
   newClass: PropTypes.string,
@@ -82,6 +83,7 @@ Input.propTypes = {
 Input.defaultProps = {
   title: '',
   id: 0,
+  cardId: 0,
   newClass: '',
 };
 

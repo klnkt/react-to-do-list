@@ -34,53 +34,58 @@ class App extends React.Component {
     this.clearEdit = this.clearEdit.bind(this);
   }
 
-  changeStatus(taskId, taskStatus) {
-    const modifiedTasks = this.state.cards[0].tasks.map((it) => {
-      if (it.id === taskId) {
-        const obj = { status: taskStatus };
-        return { ...it, ...obj };
+  changeStatus(cardId, taskId, taskStatus) {
+    const modifiedState = this.state.cards.map((card) => {
+      if (card.id === cardId) {
+        card.tasks.map((it) => {
+          if (it.id === taskId) {
+            it.status = taskStatus;
+          }
+          return it;
+        });
       }
-      return it;
+      return card;
     });
-    const modifiedState = this.state.cards.slice();
-    modifiedState[0].tasks = modifiedTasks;
     this.setState({ cards: modifiedState });
     this.clearEdit();
   }
 
-  addTask(newTitle) {
-    const modifiedTasks = this.state.cards[0].tasks.slice();
-    const idArr = modifiedTasks.map(it => it.id);
-    const newId = Math.max.apply(null, idArr) + 1;
-    const newTask = {
-      id: newId,
-      title: newTitle,
-      status: 'unchecked',
-    };
-    modifiedTasks.push(newTask);
-    const modifiedState = this.state.cards.slice();
-    modifiedState[0].tasks = modifiedTasks;
+  addTask(newTitle, cardId) {
+    const modifiedState = this.state.cards.map((card) => {
+      if (card.id === cardId) {
+        const idArr = card.tasks.map(it => it.id);
+        const newId = Math.max.apply(null, idArr) + 1;
+        const newTask = {
+          id: newId,
+          title: newTitle,
+          status: 'unchecked',
+        };
+        card.tasks.push(newTask);
+      }
+      return card;
+    });
     this.setState({ cards: modifiedState });
     this.clearEdit();
   }
 
-  editTask(taskTitle, taskId) {
-    const modifiedTasks = this.state.cards[0].tasks.map((it) => {
-      if (it.id === taskId) {
-        const obj = { title: taskTitle };
-        return { ...it, ...obj };
+  editTask(cardId, taskTitle, taskId) {
+    const modifiedState = this.state.cards.map((card) => {
+      if (card.id === cardId) {
+        card.tasks.map((it) => {
+          if (it.id === taskId) {
+            it.title = taskTitle;
+          }
+          return it;
+        });
       }
-      return it;
+      return card;
     });
-    const modifiedState = this.state.cards.slice();
-    modifiedState[0].tasks = modifiedTasks;
     this.setState({ cards: modifiedState });
     this.clearEdit();
   }
 
   editName(title, id) {
-    const modifiedState = this.state.cards.slice();
-    modifiedState.map((it) => {
+    const modifiedState = this.state.cards.map((it) => {
       if (it.id === id) {
         it.name.title = title;
       }
@@ -144,28 +149,39 @@ class App extends React.Component {
     this.setState({ cards: modifiedState });
   }
 
-  removeTask(taskId) {
-    const modifiedTasks = this.state.cards[0].tasks.filter(it => !(it.id === taskId));
-    const modifiedState = this.state.cards.slice();
-    modifiedState[0].tasks = modifiedTasks;
+  removeTask(cardId, taskId) {
+    const modifiedState = this.state.cards.map((card) => {
+      if (card.id === cardId) {
+        const newTasks = card.tasks.filter(it => !(it.id === taskId));
+        card.tasks = newTasks;
+      }
+      return card;
+    });
     this.setState({ cards: modifiedState });
     this.clearEdit();
   }
 
   render() {
-    return (
+    const items = this.state.cards.map(it => (
       <Card
-        id={this.state.cards[0].id}
-        tasks={this.state.cards[0].tasks}
-        name={this.state.cards[0].name}
+        key={it.id}
+        id={it.id}
+        tasks={it.tasks}
+        name={it.name}
         changeStatus={this.changeStatus}
         addTask={this.addTask}
         removeTask={this.removeTask}
         editTask={this.editTask}
         editName={this.editName}
         editState={this.editState}
-        edit={this.state.cards[0].edit}
+        edit={it.edit}
       />
+    ),
+    );
+    return (
+      <div className="cards_wraper">
+        {items}
+      </div>
     );
   }
 }

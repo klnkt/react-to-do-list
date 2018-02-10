@@ -12,7 +12,12 @@ function Card(props) {
   if (props.edit === true) {
     element = (
       <div>
-        <Input do={props.addTask} undo={() => props.editState(props.edit, 'card', cardId)} newClass="card__input" />
+        <Input
+          id={props.id}
+          do={props.addTask}
+          undo={() => props.editState(props.edit, 'card', cardId)}
+          newClass="card__input"
+        />
       </div>
     );
   } else {
@@ -44,7 +49,10 @@ function Card(props) {
 Card.propTypes = {
   id: PropTypes.number.isRequired,
   tasks: PropTypes.arrayOf(PropTypes.object),
-  name: PropTypes.arrayOf(PropTypes.object),
+  name: PropTypes.shape({
+    title: PropTypes.string,
+    edit: PropTypes.bool,
+  }),
   changeStatus: PropTypes.func.isRequired,
   addTask: PropTypes.func.isRequired,
   removeTask: PropTypes.func.isRequired,

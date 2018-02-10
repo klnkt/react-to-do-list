@@ -16,6 +16,7 @@ function Task(props) {
       name="done"
       cb={changeStatus}
       id={id}
+      cardId={props.cardId}
       status="checked"
       newClass="control__hidden control__hover task_list__control"
     />
@@ -25,6 +26,7 @@ function Task(props) {
       name="refresh"
       cb={changeStatus}
       id={id}
+      cardId={props.cardId}
       status="unchecked"
       newClass="control__hidden control__hover task_list__control"
     />
@@ -34,6 +36,7 @@ function Task(props) {
       name="delete"
       cb={removeTask}
       id={id}
+      cardId={props.cardId}
       newClass="control__hidden control__hover task_list__control"
     />
   );
@@ -52,6 +55,7 @@ function Task(props) {
       <Input
         title={props.title}
         id={props.id}
+        cardId={props.cardId}
         do={editTitle}
         undo={() => editState(props.edit, 'task', props.cardId, props.id)}
         newClass={`task_list__item ${taskClass}`}
@@ -68,7 +72,7 @@ function Task(props) {
     );
   }
   return (
-    <li id={props.id}>
+    <li>
       {taskElement}
     </li>
   );
