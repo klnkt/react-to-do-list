@@ -3,10 +3,10 @@ import './App.css';
 import Card from './card/Card';
 
 const TASKS = [
-  { id: 1, title: 'Wash some dishes', status: 'unchecked', edit: false },
-  { id: 2, title: 'Pet my cat', status: 'unchecked', edit: false },
-  { id: 3, title: 'Read about ES6 shortcuts and spreads', status: 'unchecked', edit: false },
-  { id: 4, title: 'Fix all typos', status: 'unchecked', edit: false },
+  { id: 1, title: 'Important task #1', status: 'unchecked', edit: false },
+  { id: 2, title: 'Very important task #2', status: 'unchecked', edit: false },
+  { id: 3, title: 'Not so important task #3', status: 'unchecked', edit: false },
+  { id: 4, title: 'Unimportant task #4', status: 'unchecked', edit: false },
 ];
 
 class App extends React.Component {
@@ -17,7 +17,7 @@ class App extends React.Component {
         {
           id: 1,
           name: {
-            title: 'Important tasks',
+            title: 'My important tasks',
             edit: false,
           },
           tasks: TASKS,
@@ -25,6 +25,7 @@ class App extends React.Component {
         },
       ],
     };
+    this.saveData = this.saveData.bind(this);
     this.changeStatus = this.changeStatus.bind(this);
     this.addTask = this.addTask.bind(this);
     this.removeTask = this.removeTask.bind(this);
@@ -32,6 +33,18 @@ class App extends React.Component {
     this.editName = this.editName.bind(this);
     this.editState = this.editState.bind(this);
     this.clearEdit = this.clearEdit.bind(this);
+  }
+
+  componentWillMount() {
+    const savedData = localStorage.getItem('data');
+    if (savedData) {
+      this.setState({ cards: JSON.parse(savedData) });
+    }
+  }
+
+  saveData(newState) {
+    this.setState({ cards: newState });
+    localStorage.setItem('data', JSON.stringify(this.state.cards));
   }
 
   changeStatus(cardId, taskId, taskStatus) {
@@ -46,15 +59,16 @@ class App extends React.Component {
       }
       return card;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
     this.clearEdit();
   }
 
   addTask(newTitle, cardId) {
     const modifiedState = this.state.cards.map((card) => {
       if (card.id === cardId) {
+        const l = (card.tasks.length === 0);
         const idArr = card.tasks.map(it => it.id);
-        const newId = Math.max.apply(null, idArr) + 1;
+        const newId = l ? 1 : Math.max.apply(null, idArr) + 1;
         const newTask = {
           id: newId,
           title: newTitle,
@@ -64,11 +78,11 @@ class App extends React.Component {
       }
       return card;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
     this.clearEdit();
   }
 
-  editTask(cardId, taskTitle, taskId) {
+  editTask(taskTitle, taskId, cardId) {
     const modifiedState = this.state.cards.map((card) => {
       if (card.id === cardId) {
         card.tasks.map((it) => {
@@ -80,7 +94,7 @@ class App extends React.Component {
       }
       return card;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
     this.clearEdit();
   }
 
@@ -91,7 +105,7 @@ class App extends React.Component {
       }
       return it;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
     this.clearEdit();
   }
 
@@ -132,7 +146,7 @@ class App extends React.Component {
       default:
         break;
     }
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
   }
 
   clearEdit() {
@@ -146,7 +160,7 @@ class App extends React.Component {
       card.edit = false;
       return card;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
   }
 
   removeTask(cardId, taskId) {
@@ -157,7 +171,7 @@ class App extends React.Component {
       }
       return card;
     });
-    this.setState({ cards: modifiedState });
+    this.saveData(modifiedState);
     this.clearEdit();
   }
 
